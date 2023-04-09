@@ -21,13 +21,15 @@ Card Player:: pullCard(){
 }
 void Player::addCardTaken(Card c){
     this->cardsTaken.push(c);
+    std::cout<<"stack size ";
+    std::cout<<cardsTaken.size()<<std::endl;
     return;
 }
 int Player:: cardesTaken(){
-    return this->cardsTaken.size();
+    return (int) this->cardsTaken.size()/2;
 }
 int Player:: stacksize(){
-    return this->cardsPile.size();
+    return (int) this->cardsPile.size();
 }
 void Player:: incrTurnsPlayed(){
     this->turnsPlayed++;
@@ -44,4 +46,7 @@ void Player:: incrDraws(){
 void Player:: printStats(){
     std::cout<<"hello stats"<<std::endl;
     return;
+}
+std::string Player:: getName(){
+    return this->name;
 }

@@ -10,6 +10,6 @@ int Card:: getValue(){
     return this->value;
 }
 std::string Card::toString(){
-    std::string cardString=valueNames[this->value]+(" of ")+cTypeNames[this->type];
+    std::string cardString=valueNames[(size_t)this->value]+(" of ")+cTypeNames[this->type];
     return cardString;
 }

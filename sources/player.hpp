@@ -24,5 +24,6 @@ class Player {
         void incrDraws();
         void printStats();
         Card pullCard();
+        std::string getName();
 };
 #endif

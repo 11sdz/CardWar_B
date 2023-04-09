@@ -2,9 +2,10 @@
 #define GAME_H
 #include "player.hpp"
 #include "card.hpp"
-#include <stack>
+#include <list>
 #include <string>
 #include <array>
+#include <queue>
 static const int totalCards=52;
 using namespace std;
 namespace ariel{
@@ -13,13 +14,18 @@ namespace ariel{
 class Game{
     private:
         Player playerOne;
-        Player PlayerTwo;
+        Player playerTwo;
         std::array<Card,totalCards>cards;
         bool gameDone;
-        bool winner;
-        std::stack <std::string> logger;
+        int winner;
+        std::stack<std::string> slogger;
+        std::queue<std::string> qlogger;
+
         void createCards();
         void shuffleCards();
+        int turnCounter;
+        std::string turnString(string,string,string,string);
+        int getRoundWinner(int,Card,Card);
 
     public:
         Game();

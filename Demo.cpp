@@ -18,6 +18,7 @@ using namespace ariel;
 
 int main() {
   // Create two players with their names 
+  cout<<"starts"<<endl;
    Player p1("Alice");
    Player p2("Bob");
 
