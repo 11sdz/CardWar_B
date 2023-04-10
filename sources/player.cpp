@@ -1,3 +1,7 @@
+//
+// Created by mintsdz on 4/9/23.
+//
+
 #include "player.hpp"
 #include <string>
 #include <iostream>
@@ -8,10 +12,11 @@ Player::Player (std::string pName){
     this->draws=0;
 }
 Player::Player(){
-    
+
 }
 void Player:: addCardPile(Card c){
-    this->cardsPile.push(c);
+    Card copy=c;
+    this->cardsPile.push(copy);
     return;
 }
 Card Player:: pullCard(){
@@ -20,16 +25,15 @@ Card Player:: pullCard(){
     return c;
 }
 void Player::addCardTaken(Card c){
-    this->cardsTaken.push(c);
-    std::cout<<"stack size ";
-    std::cout<<cardsTaken.size()<<std::endl;
+    Card copy=c;
+    this->cardsTaken.push(copy);
     return;
 }
 int Player:: cardesTaken(){
-    return (int) this->cardsTaken.size()/2;
+    return cardsTaken.size();
 }
 int Player:: stacksize(){
-    return (int) this->cardsPile.size();
+    return cardsPile.size();
 }
 void Player:: incrTurnsPlayed(){
     this->turnsPlayed++;
