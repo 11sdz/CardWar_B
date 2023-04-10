@@ -40,6 +40,8 @@ void Game::playTurn() {
         while(!turnEnd) {
             int roundWinner = getRoundWinner(cardP1.getValue() - cardP2.getValue(), cardP1, cardP2);
             if (roundWinner == 0) {
+                playerOne->incrDraws();
+                playerTwo->incrDraws();
                 log.append(turnString(playerOne->getName(),playerTwo->getName(),cardP1.toString(),cardP2.toString()));
                 log.append(" Draw \n");
                 if(playerTwo->stacksize()<2 && playerOne->stacksize()<2){
@@ -74,8 +76,14 @@ void Game::playTurn() {
                     } else {
                         playerTwo->addCardTaken(cs.top());
                         cs.pop();
+                        playerTwo->incrTurnsWon();
                         name=playerTwo->getName();
                     }
+                }
+                if(roundWinner==1){
+                    playerOne->incrTurnsWon();
+                }else if(roundWinner ==2){
+                    playerTwo->incrTurnsWon();
                 }
                 log.append(turnString(playerOne->getName(),playerTwo->getName(),cardP1.toString(),cardP2.toString()));
                 log.append(name+" Win "+cardsWon);
@@ -92,107 +100,7 @@ void Game::playTurn() {
     }
 }
 
-/*void Game:: playTurn(){
-    if(!gameDone){
-        string log;
-        turnCounter++;
-        playerOne->incrTurnsPlayed();
-        playerTwo->incrTurnsPlayed();
-        Card cardP1 = this->playerOne->pullCard();
-        Card cardP2 = this->playerTwo->pullCard();
-        int diff=cardP1.getValue()-cardP2.getValue();
-        log.append("Turn number "+to_string(turnCounter)+" : ");
-        if(diff==0){//Draw
-            playerOne->incrDraws();
-            playerTwo->incrDraws();
-            bool eFlag=false;
-            stack <Card> cs;
-            cs.push(cardP1);
-            cs.push(cardP2);
-            int numOfCards=1;
-            while(!(cs.empty())){
-                log.append(this->turnString(playerOne->getName(),playerTwo->getName()
-                        ,cardP1.toString(),cardP2.toString()));
-                if(playerOne->stacksize()>1){
-                    cs.push(playerOne->pullCard());
-                    cs.push(playerTwo->pullCard());
-                    cardP1=playerOne->pullCard();
-                    cardP2=playerTwo->pullCard();
-                    diff=cardP1.getValue()-cardP2.getValue();
-                    if(diff!=0){
-                        int winner = this->getRoundWinner(diff,cardP1,cardP2);
-                        if(winner==1){
-                            playerOne->addCardTaken(cardP1);
-                            playerOne->addCardTaken(cardP2);
-                            log.append(this->turnString(playerOne->getName(),playerTwo->getName()
-                                    ,cardP1.toString(),cardP2.toString()));
-                            log.append(playerOne->getName()+" win .");
-                            while(!cs.empty()){
-                                playerOne->addCardTaken(cs.top());
-                                cs.pop();
-                            }
-                            playerOne->incrTurnsWon();
-                        }else if(winner==2){
-                            playerTwo->addCardTaken(cardP1);
-                            playerTwo->addCardTaken(cardP2);
-                            log.append(this->turnString(playerOne->getName(),playerTwo->getName()
-                                    ,cardP1.toString(),cardP2.toString()));
-                            log.append(playerTwo->getName()+" win .");
-                            playerTwo->incrTurnsWon();
-                            while(!cs.empty()){
-                                playerTwo->addCardTaken(cs.top());
-                                cs.pop();
-                            }
-                        }
-                        numOfCards+=2;
-                    }
-                }else if(playerOne->stacksize()==1){
-                    cs.push(playerOne->pullCard());
-                    cs.push(playerTwo->pullCard());
-                    numOfCards++;
-                    eFlag=true;
-                    break;
-                }else{
-                    eFlag=true;
-                    break;
-                }
-                if(eFlag){
-                    //cards ended for bothsides
-                    while(!cs.empty()){
-                        playerOne->addCardTaken(cs.top());
-                        cs.pop();
-                        playerTwo->addCardTaken(cs.top());
-                        cs.pop();
-                    }
-                }
-            }
-            log.append("Cards Won =");
-            log.append(to_string(numOfCards));
-        }else{// round ended with a Win
-            int winner = this->getRoundWinner(diff,cardP1,cardP2);
-            if(winner==1){
-                playerOne->addCardTaken(cardP1);
-                playerOne->addCardTaken(cardP2);
-                log.append(this->turnString(playerOne->getName(),playerTwo->getName()
-                        ,cardP1.toString(),cardP2.toString()));
-                log.append(playerOne->getName()+" win ");
-                playerOne   ->incrTurnsWon();
-            }else if(winner==2){
-                playerTwo->addCardTaken(cardP1);
-                playerTwo->addCardTaken(cardP2);
-                log.append(this->turnString(playerOne->getName(),playerTwo->getName()
-                        ,cardP1.toString(),cardP2.toString()));
-                log.append(playerTwo->getName()+" win ");
-                playerTwo->incrTurnsWon();
-            }
-        }
-        if(playerOne->stacksize()==0 && playerTwo->stacksize()==0){
-            gameDone=true;
-        }
-        slogger.push(log);
-        qlogger.push(log);
-    }
-}*/
+
 string Game::turnString(string name1,string name2, string card1,string card2){
     string str;
     str.append(name1+" has played "+card1+" "+name2+" has played "+card2+" ,");
@@ -250,6 +158,8 @@ void Game:: printLog(){
     return;
 }
 void Game:: printStats(){
+    playerOne->printStats();
+    playerTwo->printStats();
     return;
 }
 bool Game:: isDone(){

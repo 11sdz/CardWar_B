@@ -5,7 +5,9 @@
 #include "player.hpp"
 #include <string>
 #include <iostream>
-Player::Player (std::string pName){
+
+using namespace std;
+Player::Player (string pName){
     this->name=pName;
     this->turnsPlayed=0;
     this->turnsWon=0;
@@ -48,7 +50,15 @@ void Player:: incrDraws(){
     return;
 }
 void Player:: printStats(){
-    std::cout<<"hello stats"<<std::endl;
+    float winRate=(float)turnsWon/turnsPlayed;
+    float drawRate=(float)draws/turnsPlayed;
+    float cardsPerTurn= (float)cardesTaken()/turnsPlayed;
+    cout<<"====== "+name+" Game stats======"<<endl;
+    cout<<"Win Rate: "+to_string(winRate);
+    cout<<" . Draw Rate: "+to_string(drawRate)<<endl;
+    cout<<"Cards Taken: "+to_string(cardesTaken())+" .Cards taken per turn: "+to_string(cardsPerTurn);
+    cout<<" . turns played: "+to_string(turnsPlayed)+"\n"<<endl;
+
     return;
 }
 std::string Player:: getName(){
