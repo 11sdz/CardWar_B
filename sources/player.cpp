@@ -1,24 +1,17 @@
-//
-// Created by mintsdz on 4/9/23.
-//
-
 #include "player.hpp"
 #include <string>
 #include <iostream>
-
-using namespace std;
-Player::Player (string pName){
+Player::Player (std::string pName){
     this->name=pName;
     this->turnsPlayed=0;
     this->turnsWon=0;
     this->draws=0;
 }
 Player::Player(){
-
+    
 }
 void Player:: addCardPile(Card c){
-    Card copy=c;
-    this->cardsPile.push(copy);
+    this->cardsPile.push(c);
     return;
 }
 Card Player:: pullCard(){
@@ -27,15 +20,16 @@ Card Player:: pullCard(){
     return c;
 }
 void Player::addCardTaken(Card c){
-    Card copy=c;
-    this->cardsTaken.push(copy);
+    this->cardsTaken.push(c);
+    std::cout<<"stack size ";
+    std::cout<<cardsTaken.size()<<std::endl;
     return;
 }
 int Player:: cardesTaken(){
-    return cardsTaken.size();
+    return (int) this->cardsTaken.size()/2;
 }
 int Player:: stacksize(){
-    return cardsPile.size();
+    return (int) this->cardsPile.size();
 }
 void Player:: incrTurnsPlayed(){
     this->turnsPlayed++;
@@ -50,15 +44,7 @@ void Player:: incrDraws(){
     return;
 }
 void Player:: printStats(){
-    float winRate=(float)turnsWon/turnsPlayed;
-    float drawRate=(float)draws/turnsPlayed;
-    float cardsPerTurn= (float)cardesTaken()/turnsPlayed;
-    cout<<"====== "+name+" Game stats======"<<endl;
-    cout<<"Win Rate: "+to_string(winRate);
-    cout<<" . Draw Rate: "+to_string(drawRate)<<endl;
-    cout<<"Cards Taken: "+to_string(cardesTaken())+" .Cards taken per turn: "+to_string(cardsPerTurn);
-    cout<<" . turns played: "+to_string(turnsPlayed)+"\n"<<endl;
-
+    std::cout<<"hello stats"<<std::endl;
     return;
 }
 std::string Player:: getName(){
