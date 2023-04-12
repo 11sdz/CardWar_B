@@ -1,3 +1,4 @@
+
 #include "doctest.h"
 #include <stdexcept>
 #include "sources/player.hpp"
@@ -98,3 +99,22 @@ TEST_CASE("The game ends after at most 26 turns")
     CHECK(p2.stacksize() == 0);
 }
 
+TEST_CASE("cards counter"){
+    array<int,13> cardsCounter;
+    for (size_t i = 0; i <13 ; ++i) {
+        cardsCounter[i]=0;
+    }
+    Player a("A");
+    Player b("B");
+    Game(a,b);
+    while (a.stacksize() && b.stacksize()){
+        Card c1 = a.pullCard();
+        Card c2 = b.pullCard();
+        cardsCounter[(size_t)(c1.getValue()-1)]++;
+        cardsCounter[(size_t)(c2.getValue()-1)]++;
+    }
+    for (size_t i = 0; i <13 ; ++i) {
+        CHECK((cardsCounter[i]==4));
+    }
+
+}
